@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="Schema\ApoXML_Schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Schema\ApoXML_Schema_edit.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Schema\AsantiXML_Schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+
+</Project>

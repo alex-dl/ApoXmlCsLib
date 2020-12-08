@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns0:ApoXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" Amount="2000" PrintProcess="ConventionalPrinting" ProductType="Brochure" Comments="ApoXML multipart brochure SpreadCover 4/4; Body 1/1 16pp" JobName="Booklet - SpreadCover + Body 1208110325" OrderNumber="ApoXML" Versions="" VersionLayers="" AgentName="ApoXmlCsLib" AgentVersion="1.0.0" DecimalSeparator="." ThousandSeparator="," Unit="mm" xmlns:ns0="http://www.agfa.com/apoxml">
+  <CustomerContact>
+    <Company Company="Demo Company" Phone="123456789" Street="Demo Street 1" ZIP="1234" StateProvince="Demo Province" City="Demo City" Country="Demo Country" JDFProductID="PID_Comp_DemoCompany_001" PrintCenter="Demo Print Center" />
+    <Person Prefix="123" Title="Mr." FirstName="ContactFirstName" LastName="ContactLastName" FixPhone="456789" MobilePhone="987654" Email="contact@example.com" JDFProductID="PID_Pers_FirstLast_001" />
+  </CustomerContact>
+  <Binding Method="Nested" />
+  <PartCover PartName="Cover" Press="Small Press" WorkStyle="Duplex" OpenWidth="422" Comments="Cover remarks" CoverType="Spread" PartType="Cover">
+    <Color NrColors="4" />
+    <Pages URL="file:///D:/_PROGRAMMING/_AGFA/ApoXmlLib/DemoApoXmlApp/bin/Debug/netcoreapp3.1/Samples/PDF/Cover_Spread_DS_425x297.pdf" PageCount="2" PageWidth="210" PageHeight="297" />
+    <PaperStock Grade="1" StockName="Cover_Heavy" Weight="200" Thickness="0.24" SheetWidth="707" SheetHeight="500" />
+  </PartCover>
+  <Part PartName="Body" Press="Large Press" WorkStyle="Duplex" Comments="Body remark" PartType="Body">
+    <Color NrColors="1" />
+    <Pages URL="file:///D:/_PROGRAMMING/_AGFA/ApoXmlLib/DemoApoXmlApp/bin/Debug/netcoreapp3.1/Samples/PDF/A4_16p_CMYK.pdf" PageCount="16" PageWidth="210" PageHeight="297" />
+    <PaperStock Grade="1" StockName="Antalis Coated" Weight="100" Thickness="0.12" SheetWidth="1000" SheetHeight="707" />
+  </Part>
+</ns0:ApoXML>

@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon>ApoXML.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Samples\PDF\A4_16p_CMYK.pdf" />
+    <None Remove="Samples\PDF\BusinessCard_A_01_DS_CMYK_85x54.7.pdf" />
+    <None Remove="Samples\PDF\BusinessCard_B_01_DS_CMYK_85x54.7.pdf" />
+    <None Remove="Samples\PDF\BusinessCard_C_01_DS_CMYK_85x54.7.pdf" />
+    <None Remove="Samples\PDF\Cover_Spread_DS_425x297.pdf" />
+    <None Remove="Samples\PDF\Poster_01_CMYK_A3.pdf" />
+    <None Remove="Samples\PDF\Poster_02_CMYK_A3.pdf" />
+    <None Remove="Samples\XML\ApoXml_Booklet_Spreadcover_Body_16p.xml" />
+    <None Remove="Samples\XML\ApoXml_BusinessCards.xml" />
+    <None Remove="Samples\XML\AsantiXml_Posters.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Samples\PDF\A4_16p_CMYK.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\PDF\BusinessCard_A_01_DS_CMYK_85x54.7.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\PDF\BusinessCard_B_01_DS_CMYK_85x54.7.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\PDF\BusinessCard_C_01_DS_CMYK_85x54.7.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\PDF\Cover_Spread_DS_425x297.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\PDF\Poster_01_CMYK_A3.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\PDF\Poster_02_CMYK_A3.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\XML\ApoXml_Booklet_Spreadcover_Body_16p.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\XML\ApoXml_BusinessCards.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\XML\AsantiXml_Posters.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ApoXmlCsLib\ApoXmlCsLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+
+
+</Project>

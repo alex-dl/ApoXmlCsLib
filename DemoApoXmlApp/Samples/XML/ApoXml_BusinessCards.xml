@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns0:ApoXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" PrintProcess="ConventionalPrinting" ProductType="Flatwork" Comments="ApoXML BusinessCards sample - 3 different business cards in different quantities." JobName="BusinessCards 1208110324" OrderNumber="ApoXML" Versions="" VersionLayers="" AgentName="ApoXmlCsLib" AgentVersion="1.0.0" DecimalSeparator="." ThousandSeparator="," Unit="mm" xmlns:ns0="http://www.agfa.com/apoxml">
+  <CustomerContact>
+    <Company Company="Demo Company" Phone="123456789" Street="Demo Street 1" ZIP="1234" StateProvince="Demo Province" City="Demo City" Country="Demo Country" JDFProductID="PID_Comp_DemoCompany_001" PrintCenter="Demo Print Center" />
+    <Person Prefix="123" Title="Mr." FirstName="ContactFirstName" LastName="ContactLastName" FixPhone="456789" MobilePhone="987654" Email="contact@example.com" JDFProductID="PID_Pers_FirstLast_001" />
+  </CustomerContact>
+  <Binding Method="Unbound" />
+  <Part PartName="BusinessCards A" Press="Large Press" WorkStyle="Duplex" Comments="BusinessCard remark" Amount="200" PartType="Plain">
+    <Color NrColors="4" />
+    <Pages URL="file:///D:/_PROGRAMMING/_AGFA/ApoXmlLib/DemoApoXmlApp/bin/Debug/netcoreapp3.1/Samples/PDF/BusinessCard_A_01_DS_CMYK_85x54.7.pdf" PageCount="2" PageWidth="85" PageHeight="55" />
+    <PaperStock Grade="1" StockName="Businesscards" Weight="200" Thickness="0.2" SheetWidth="707" SheetHeight="500" />
+  </Part>
+  <Part PartName="BusinessCards B" Press="Large Press" WorkStyle="Duplex" Comments="BusinessCard remark" Amount="100" PartType="Plain">
+    <Color NrColors="4" />
+    <Pages URL="file:///D:/_PROGRAMMING/_AGFA/ApoXmlLib/DemoApoXmlApp/bin/Debug/netcoreapp3.1/Samples/PDF/BusinessCard_B_01_DS_CMYK_85x54.7.pdf" PageCount="2" PageWidth="85" PageHeight="55" />
+    <PaperStock Grade="1" StockName="Businesscards" Weight="200" Thickness="0.2" SheetWidth="707" SheetHeight="500" />
+  </Part>
+  <Part PartName="BusinessCards C" Press="Large Press" WorkStyle="Duplex" Comments="BusinessCard remark" Amount="300" PartType="Plain">
+    <Color NrColors="4" />
+    <Pages URL="file:///D:/_PROGRAMMING/_AGFA/ApoXmlLib/DemoApoXmlApp/bin/Debug/netcoreapp3.1/Samples/PDF/BusinessCard_C_01_DS_CMYK_85x54.7.pdf" PageCount="2" PageWidth="85" PageHeight="55" />
+    <PaperStock Grade="1" StockName="Businesscards" Weight="200" Thickness="0.2" SheetWidth="707" SheetHeight="500" />
+  </Part>
+</ns0:ApoXML>

@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- schema for AsantiXML
+version v1.3.8 2020 08 27
+derived from ApoXML schema 1.29 and simplified, wording adapted for Asanti
+
+2019 07 02 v1.3.6 AP11.3	
+				added Priority
+				added PaperStock/@MediaUnit PaperStock/@ProductfID
+				added AsantiCPM, AsantiWhiteGeneration, AsantiWhiteOrder
+
+2019 07 19 	1.3.6.1 PageCount is optional now
+			added Pages/@PageIndex for AsantiXML
+
+2019 08 06	1.3.6.2 Correct Sandwich spelling
+
+2020 06 18	1.3.7 Added AsantiImagePreset, Added AsantiPinConfig and AsantiPinSet Asanti 5.0b1
+2020 06 18	1.3.7 Finalized as 1.3.7 for Asanti 12.0b3 and Prepress 12.0b3
+2020 08 27	1.3.8 Added AgentNameJDF and AgentVersionJDF (forgotten), GeneralIDs (copied from ApoXML)
+todo add legal/letter etc. as page format?
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.agfa.com/apoxml" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="http://www.agfa.com/apoxml" elementFormDefault="unqualified">
+	<!-- Company element -->
+	<xs:complexType name="BaseCompanyType">
+		<xs:annotation>
+			<xs:documentation>
+				Customer Company info, simplified for Asanti
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Company" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Asanti Company"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Phone" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="+32 3 444 2111"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Street" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Septestraat 27"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ZIP" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="B-2640"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="StateProvince" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Antwerp"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="City" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Mortsel"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Country" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Belgium"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<!-- Person element -->
+	<xs:complexType name="BasePersonType">
+		<xs:annotation>
+			<xs:documentation>
+				Generic Person info, simplified for Asanti
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Title" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Mr."/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FirstName" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Jan"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="LastName" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Janssens"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FixPhone" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="+32 3 444 3333"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Email" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Email must be unique between Contacts, and must be a valid address (contain @ and a domain name).
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="jan@janssens.com"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<!-- Base Contact
+other contacts are derived from this -->
+	<xs:complexType name="BaseContactType">
+		<xs:annotation>
+			<xs:documentation>
+				Generic Contact (containing Company and Person)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:all minOccurs="0">
+			<xs:element name="Company" type="ns0:BaseCompanyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Company is mandatory except for Guest, so no longer mandatory
+					</xs:documentation>
+
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="TheCompany"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Person" type="ns0:BasePersonType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Person is optional for CustomerContact but required for all others
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<!-- PartType type -->
+	<xs:simpleType name="PartTypeType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Part Type. Optional. Usually Flatwork
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Flatwork">
+				<xs:annotation>
+					<xs:documentation>
+						Unbound Unfolded
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- GeneralIDs
+20181220 to specify Custom JDF Variables -->
+	<xs:complexType name="GeneralIDsType">
+		<xs:annotation>
+			<xs:documentation>
+				Contains GeneralID elements which map to JDF GeneralID elements and are used for custom JDF Variables
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="0">
+			<xs:element name="GeneralID" type="ns0:GeneralIDType" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						GeneralID is mapped to JDF GeneralID
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneralIDType">
+		<xs:annotation>
+			<xs:documentation>
+				Contains GeneralID elements which map to JDF GeneralID elements and are used for custom JDF Variables
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Key" type="xs:string" use="required"/>
+		<xs:attribute name="Value" type="xs:string" use="required"/>
+	</xs:complexType>
+	<!-- ***
+		List of attributes, grouped by type 
+		*** -->
+	<!-- A1 and B1 added in stylesheet 1.3.2 -->
+	<xs:simpleType name="ISOPageSizeType">
+		<xs:annotation>
+			<xs:documentation>
+				List of ISO Page Sizes
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A1"/>
+			<xs:enumeration value="A2"/>
+			<xs:enumeration value="A3"/>
+			<xs:enumeration value="A4"/>
+			<xs:enumeration value="A5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISOPaperSizeType">
+		<xs:annotation>
+			<xs:documentation>
+				List of ISO Print Paper Sizes
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="B1"/>
+			<xs:enumeration value="B2"/>
+			<xs:enumeration value="B3"/>
+			<xs:enumeration value="B4"/>
+			<xs:enumeration value="B5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- combination of Page and Paper Size -->
+	<xs:simpleType name="ISOPagePaperSizeType">
+		<xs:annotation>
+			<xs:documentation>
+				List of ISO Page and Print Paper Sizes
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="ns0:ISOPaperSizeType ns0:ISOPageSizeType"/>
+	</xs:simpleType>
+	<!-- Binding Method, GradeType: removed for Asanti -->
+	<!-- MediaUnit -->
+	<xs:simpleType name="MediaUnitType">
+		<xs:annotation>
+			<xs:documentation>
+				MediaUnit (Sheet or Roll). Roll has height = 0 usually.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Roll"/>
+			<xs:enumeration value="Sheet"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Pages element -->
+	<xs:complexType name="PagesType">
+		<xs:annotation>
+			<xs:documentation>
+				Information on Images
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="URL" type="xs:anyURI" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					URL pointing to the content for this part. If all parts share the same URL (shared runlist) the Cover pages must wrap around the body. URL can be http or an absolute file path like file://myserver/myshare/mybodypdf.pdf, relative paths are not supported.
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="file://fileserver/Content/Poster0-A3.pdf"/>
+						<altova:example value="file://fileserver/Content/Poster1-A3.pdf"/>
+						<altova:example value=""/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<!-- moved to optional for Asanti XML since usually 1 (used as default now) -->
+		<xs:attribute name="PageCount" type="xs:integer" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					RunList Page Count: usually 1 except for PDF
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="1"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PageIndex" type="xs:integer" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					RunList Index into PDF: 1 grabs first page, 2 second etc.
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="1"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<!--xs:attribute name="PageWidth" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>Print Target Width (not supported yet). Units in 'Unit' attribute (pts, inch, mm)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute-->
+		<!--xs:attribute name="PageHeight" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>Print Target Width (not supported yet). Units in 'Unit' attribute (pts, inch, mm)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute-->
+	</xs:complexType>
+	<!-- For Asanti not mandatory -->
+	<!-- PaperStock Asanti removed Grade ISOPaperSubstrate Coating Weight Thickness GrainDirection -->
+	<xs:complexType name="PaperStockType">
+		<xs:annotation>
+			<xs:documentation>
+				Describes the substrate (optional, otherwise taken from Ticket)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="MediaType" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Asanti Media Category (not really used).
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Generic"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ProductID" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					MIS stock identifier to help selecting the media. Not supported yet (scripting?).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="StockName" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Asanti MediaName.
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Generic"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Thickness" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Media Thickness. Important since used for the head (not used yet?).
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="0.092"/>
+						<altova:example value="0.120"/>
+						<altova:example value="0.092"/>
+						<altova:example value="5.0"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MediaUnit" type="ns0:MediaUnitType" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Media Unit to switch between Sheet and Roll. Roll usually has height=0.
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Sheet"/>
+						<altova:example value="Roll"/>
+						<altova:example value="Sheet"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="SheetWidth" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>Width of the Sheet. Units in 'Unit' attribute</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="2000"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="SheetHeight" type="xs:decimal" use="optional">
+			<xs:annotation>
+				<xs:documentation>Sheet or Roll Height. For Roll this can be 0. Units in 'Unit' attribute</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="1000"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<!-- Base Part (Image) -->
+	<xs:complexType name="BasePartType">
+		<xs:annotation>
+			<xs:documentation>
+				Product (Image) Part Level Specific information (not job level)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:all minOccurs="1">
+			<!-- Pages required or not?? depends if default PageCount = 1 is honored -->
+			<!-- Removed Color for Asanti since no control and always CMYK assumed -->
+			<xs:element name="Pages" type="ns0:PagesType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="PaperStock" type="ns0:PaperStockType" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+		<!-- Job Info -->
+		<xs:attribute name="Amount" type="xs:integer" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Number of copies to print for this image. Used by Auto Layout
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="50"/>
+						<altova:example value="200"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PrintProcess" type="ns0:PrintProcessType" use="required" fixed="WideFormatPrinting">
+			<xs:annotation>
+					<xs:documentation>
+						Printing process to use (conventional, digital, wide format), must be "WideFormatPrinting"
+					</xs:documentation>
+				</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Comments" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Comments specific for this part/image.
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Image1 Comment"/>
+						<altova:example value="Image2 Comment"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PartName" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Needed to identify the image. Only visible in Job Remarks
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="Poster1"/>
+						<altova:example value="Poster2"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Press" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					DeviceID of the Wide Format Press (optional, production)
+				</xs:documentation>
+				<xs:appinfo>
+					<altova:exampleValues>
+						<altova:example value="(Generic_SD)Engine"/>
+					</altova:exampleValues>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<!-- for Asanti: removed Color PartType, CoverType, FoldCatalog, OpenWidth, WorkStyle -->
+	</xs:complexType>
+	<!-- Production Intent -->
+	<xs:simpleType name="PrintProcessType">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies wide format inkjet
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WideFormatPrinting">
+				<xs:annotation>
+					<xs:documentation>
+						Wide format inkjet presses
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrintQualityType">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies the Print Quality for Asanti Sign and Display jobs
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Balanced">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti "Production" quality
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CostEffective">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti "Standard" quality (always available)
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Fastest">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti "Express" quality
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HighestQuality">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti "High Quality" quality
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AsantiWhiteGenerationType">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies the source of white for Asanti Sign and Display jobs
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FillEntireImagePrinter"/>
+			<xs:enumeration value="FillEntireImageRender"/>
+			<xs:enumeration value="FromImage"/>
+			<xs:enumeration value="InverseSolidImageMaskRender"/>
+			<xs:enumeration value="InverseVariableImageMaskRender"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="PixelMaskPrinter"/>
+			<xs:enumeration value="SolidImageMaskPixelBasedRender"/>
+			<xs:enumeration value="SolidImageMaskRender"/>
+			<xs:enumeration value="VariableImageMaskRender"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AsantiWhiteOrderType">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies the order of white for Asanti Sign and Display jobs
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PostWhite"/>
+			<xs:enumeration value="PreWhite"/>
+			<xs:enumeration value="PreWhite_OnMedia"/>
+			<xs:enumeration value="SandwichWhite"/>
+			<xs:enumeration value="SandwichWhite_OnWhite"/>
+			<xs:enumeration value="SpotWhite"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- *** root node *** -->
+	<xs:element name="ApoXML">
+		<xs:annotation>
+			<xs:documentation>
+				Root element. Contains info that is shared over parts and also the Product Part elements. Usually with ns0 prefix
+			</xs:documentation>
+		</xs:annotation>
+		<!-- List of elements -->
+		<xs:complexType>
+			<xs:sequence minOccurs="1">
+				<!-- add the elements in the specified order ! -->
+				<xs:element name="GeneralIDs" type="ns0:GeneralIDsType" minOccurs="0" maxOccurs="1"/>
+				<!-- all regarding CustomerInfo Asanti: simplified, removed AdministratorContact SenderContact ApproverContact MultiContact CSR -->
+				<xs:element name="CustomerContact" type="ns0:BaseContactType" minOccurs="0" maxOccurs="1"/>
+				<!-- Binding, Color removed for Asanti -->
+				<!-- Shared PaperStock Media -->
+				<xs:element name="PaperStock" type="ns0:PaperStockType" minOccurs="0" maxOccurs="1"/>
+				<!-- JMF  removed for Asanti-->
+				<!-- Parts -->
+				<xs:element name="Part" type="ns0:BasePartType" minOccurs="1" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="Comments" type="xs:string" use="optional" altova:exampleValues="This is a job comment">
+				<xs:annotation>
+					<xs:documentation>
+						Comments specific for this part.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="This is a general job comment"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- Asanti removed CommentURL, Amount, ProductType, CustomerOrderID -->
+			<xs:attribute name="EndDate" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						Due date (Asanti Finished date) format yyyy-mm-dd or yyyy/mm/dd
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="2017-10-12"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="JobName" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						JDF DescriptiveName. Asanti JobName. A readable (short) name of the job. OrderNumber is copied if missing.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="Asanti Job"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- 
+			*** Production ***
+-->			
+			<xs:attribute name="OrderNumber" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						JDF Job ID (mandatory). Asanti OrderNumber. Identification of the job. Usually a short, incrementing number.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="23456"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Priority" type="xs:integer" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						Job Priority (100 = High, 50=Normal, 0=Low) not really used yet
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="100"/>
+							<altova:example value="50"/>
+							<altova:example value="0"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AsantiQuality" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti Quality selector using Asanti values, part of CPM.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="Express"/>
+							<altova:example value="Standard"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- 20191003 5.0 -->
+			<xs:attribute name="AsantiImagePreset" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti 5.0 Image Preset selector.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="Grommets 5mm"/>
+							<altova:example value="Trim 3mm"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AsantiPinSet" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti 5.0 Alignment Pin Set, GeneralID[agfaAlignPinSet].
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="Front Pins"/>
+							<altova:example value="Back Pins"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AsantiPinConfig" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti 5.0 Alignment Pin Configuration, GeneralID[agfaAlignPinConfig].
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="Pin Config1"/>
+							<altova:example value="Pin Config2"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- end 5.0 -->
+			<xs:attribute name="AsantiCPM" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti CPM selector, must match exactly.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="HighQ - 4P DS Bi 720x720 - 6C"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AsantiWhiteGeneration" type="ns0:AsantiWhiteGenerationType" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti WhiteGeneration selector, must match exactly.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="FromImage"/>
+							<altova:example value="None"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AsantiWhiteOrder" type="ns0:AsantiWhiteOrderType" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti WhiteOrder selector, must match exactly.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="PostWhite"/>
+							<altova:example value="PreWhite"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="PrintQuality" type="ns0:PrintQualityType" use="optional" default="CostEffective">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti Quality selector but using JDF values, part of CPM.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="CostEffective"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="TicketTemplate" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						Asanti Layout HotTicket or JobTicket Template to be used to create the plan/flows for this job. Plan from dropper hot ticket is used if not provided.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="ASANTIXML_Generic_Vinyl"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- *** 
+			One time setup 
+			-->
+			<xs:attribute name="AgentName" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						The name of the program that creates the ApoXML. Used for debugging. Is NOT copied to the created Intent JDF.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="ApoXML Sample Generator"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AgentNameJDF" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						The name of the program that creates the ApoXML as used in the created Intent JDF. Used for logging and diagnostic purposes.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="ApoXML Sample Generator"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AgentVersion" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						The version of the program that creates the ApoXML. Used for debugging. Is NOT copied to the created Intent JDF.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="1.0"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AgentVersionJDF" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						The version of the program that creates the ApoXML as used in the created Intent JDF. Used for logging and diagnostic purposes.
+					</xs:documentation>
+					<xs:appinfo>
+						<altova:exampleValues>
+							<altova:example value="1.0"/>
+						</altova:exampleValues>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- For Asanti Unit and DecimalSeparator is not mandatory as long as Page and Sheet size, Thickness is not used -->
+			<xs:attribute name="DecimalSeparator" use="optional" default=",">
+				<xs:annotation>
+					<xs:documentation>
+						Decimal Separator. Choose from ',' or '.' Default ',' Note that schema validation will complain when ',' is used.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value=","/>
+						<xs:enumeration value="."/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ThousandSeparator" use="optional" default=".">
+				<xs:annotation>
+					<xs:documentation>
+						Thousand Separator. Choose from ',' '.' or ' Default '.'
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="."/>
+						<xs:enumeration value=","/>
+						<xs:enumeration value="&quot;"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="Unit" use="optional" default="mm">
+				<xs:annotation>
+					<xs:documentation>
+						Unit for Page / Sheet Width / Height / Size, Paper Thickness. Choose from mm, inch, pts. Default mm.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="mm"/>
+						<xs:enumeration value="inch"/>
+						<xs:enumeration value="pts"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
