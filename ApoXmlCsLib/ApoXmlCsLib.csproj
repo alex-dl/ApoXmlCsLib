@@ -5,13 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Schema\ApoXML_Schema.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Update="Schema\ApoXML_Schema_edit.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Update="Schema\AsantiXML_Schema.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

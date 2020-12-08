@@ -109,7 +109,7 @@ q. Quit
 			}
             else
             {
-				Console.WriteLine("Output folder does not exists.");
+				Console.WriteLine("Output folder does not exist.");
             }
 		}
 
