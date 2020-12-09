@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- schema for AsantiXML
-version v1.3.8 2020 08 27
+version v1.3.9 2020 12 08
 derived from ApoXML schema 1.29 and simplified, wording adapted for Asanti
 
 2019 07 02 v1.3.6 AP11.3	
@@ -14,8 +14,10 @@ derived from ApoXML schema 1.29 and simplified, wording adapted for Asanti
 2019 08 06	1.3.6.2 Correct Sandwich spelling
 
 2020 06 18	1.3.7 Added AsantiImagePreset, Added AsantiPinConfig and AsantiPinSet Asanti 5.0b1
-2020 06 18	1.3.7 Finalized as 1.3.7 for Asanti 12.0b3 and Prepress 12.0b3
-2020 08 27	1.3.8 Added AgentNameJDF and AgentVersionJDF (forgotten), GeneralIDs (copied from ApoXML)
+2020 06 18	1.3.7 (Apogee 12.0b3 and Asanti5.0b3) Finalized as 1.3.7
+2020 08 27	1.3.8 Added AgentNameJDF and AgentVersionJDF (forgotten), GeneralIDs (copied from ApoXML), assumest at least Asanti 4.3
+2020 12 09	1.3.9 Moved ProcessType to root instead of Part (bug)
+
 todo add legal/letter etc. as page format?
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.agfa.com/apoxml" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="http://www.agfa.com/apoxml" elementFormDefault="unqualified">
@@ -28,6 +30,9 @@ todo add legal/letter etc. as page format?
 		</xs:annotation>
 		<xs:attribute name="Company" type="xs:string" use="required">
 			<xs:annotation>
+				<xs:documentation>
+					Company Name
+				</xs:documentation>
 				<xs:appinfo>
 					<altova:exampleValues>
 						<altova:example value="Asanti Company"/>
@@ -160,7 +165,6 @@ other contacts are derived from this -->
 					<xs:documentation>
 						Company is mandatory except for Guest, so no longer mandatory
 					</xs:documentation>
-
 					<xs:appinfo>
 						<altova:exampleValues>
 							<altova:example value="TheCompany"/>
@@ -296,7 +300,6 @@ other contacts are derived from this -->
 				</xs:appinfo>
 			</xs:annotation>
 		</xs:attribute>
-		<!-- moved to optional for Asanti XML since usually 1 (used as default now) -->
 		<xs:attribute name="PageCount" type="xs:integer" use="optional">
 			<xs:annotation>
 				<xs:documentation>
@@ -321,6 +324,7 @@ other contacts are derived from this -->
 				</xs:appinfo>
 			</xs:annotation>
 		</xs:attribute>
+		<!-- moved to optional for Asanti XML since usually 1 (used as default now) -->
 		<!--xs:attribute name="PageWidth" type="xs:decimal" use="optional">
 			<xs:annotation>
 				<xs:documentation>Print Target Width (not supported yet). Units in 'Unit' attribute (pts, inch, mm)</xs:documentation>
@@ -434,7 +438,6 @@ other contacts are derived from this -->
 			<xs:element name="Pages" type="ns0:PagesType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="PaperStock" type="ns0:PaperStockType" minOccurs="0" maxOccurs="1"/>
 		</xs:all>
-		<!-- Job Info -->
 		<xs:attribute name="Amount" type="xs:integer" use="optional">
 			<xs:annotation>
 				<xs:documentation>
@@ -447,13 +450,6 @@ other contacts are derived from this -->
 					</altova:exampleValues>
 				</xs:appinfo>
 			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="PrintProcess" type="ns0:PrintProcessType" use="required" fixed="WideFormatPrinting">
-			<xs:annotation>
-					<xs:documentation>
-						Printing process to use (conventional, digital, wide format), must be "WideFormatPrinting"
-					</xs:documentation>
-				</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="Comments" type="xs:string" use="optional">
 			<xs:annotation>
@@ -493,6 +489,7 @@ other contacts are derived from this -->
 				</xs:appinfo>
 			</xs:annotation>
 		</xs:attribute>
+		<!-- Job Info -->
 		<!-- for Asanti: removed Color PartType, CoverType, FoldCatalog, OpenWidth, WorkStyle -->
 	</xs:complexType>
 	<!-- Production Intent -->
@@ -512,6 +509,7 @@ other contacts are derived from this -->
 			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
+	<!-- Asanti specific -->
 	<xs:simpleType name="PrintQualityType">
 		<xs:annotation>
 			<xs:documentation>
@@ -594,8 +592,9 @@ other contacts are derived from this -->
 		<xs:complexType>
 			<xs:sequence minOccurs="1">
 				<!-- add the elements in the specified order ! -->
+				<!-- optional GeneralID 20181220 -->
 				<xs:element name="GeneralIDs" type="ns0:GeneralIDsType" minOccurs="0" maxOccurs="1"/>
-				<!-- all regarding CustomerInfo Asanti: simplified, removed AdministratorContact SenderContact ApproverContact MultiContact CSR -->
+				<!-- all Contacts regarding CustomerInfo Asanti: simplified, removed AdministratorContact SenderContact ApproverContact MultiContact CSR -->
 				<xs:element name="CustomerContact" type="ns0:BaseContactType" minOccurs="0" maxOccurs="1"/>
 				<!-- Binding, Color removed for Asanti -->
 				<!-- Shared PaperStock Media -->
@@ -616,7 +615,6 @@ other contacts are derived from this -->
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:attribute>
-			<!-- Asanti removed CommentURL, Amount, ProductType, CustomerOrderID -->
 			<xs:attribute name="EndDate" type="xs:string" use="optional">
 				<xs:annotation>
 					<xs:documentation>
@@ -641,9 +639,6 @@ other contacts are derived from this -->
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:attribute>
-			<!-- 
-			*** Production ***
--->			
 			<xs:attribute name="OrderNumber" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>
@@ -670,6 +665,13 @@ other contacts are derived from this -->
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:attribute>
+			<xs:attribute name="PrintProcess" type="ns0:PrintProcessType" use="required" fixed="WideFormatPrinting">
+				<xs:annotation>
+					<xs:documentation>
+							Printing process to use (conventional, digital, wide format), must be "WideFormatPrinting"
+						</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 			<xs:attribute name="AsantiQuality" type="xs:string" use="optional">
 				<xs:annotation>
 					<xs:documentation>
@@ -683,7 +685,6 @@ other contacts are derived from this -->
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:attribute>
-			<!-- 20191003 5.0 -->
 			<xs:attribute name="AsantiImagePreset" type="xs:string" use="optional">
 				<xs:annotation>
 					<xs:documentation>
@@ -723,7 +724,6 @@ other contacts are derived from this -->
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:attribute>
-			<!-- end 5.0 -->
 			<xs:attribute name="AsantiCPM" type="xs:string" use="optional">
 				<xs:annotation>
 					<xs:documentation>
@@ -786,9 +786,6 @@ other contacts are derived from this -->
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:attribute>
-			<!-- *** 
-			One time setup 
-			-->
 			<xs:attribute name="AgentName" type="xs:string" use="optional">
 				<xs:annotation>
 					<xs:documentation>
@@ -837,7 +834,6 @@ other contacts are derived from this -->
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:attribute>
-			<!-- For Asanti Unit and DecimalSeparator is not mandatory as long as Page and Sheet size, Thickness is not used -->
 			<xs:attribute name="DecimalSeparator" use="optional" default=",">
 				<xs:annotation>
 					<xs:documentation>
@@ -879,6 +875,17 @@ other contacts are derived from this -->
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
+			<!-- Asanti removed CommentURL, Amount, ProductType, CustomerOrderID -->
+			<!-- 
+			*** Production ***
+			-->
+			<!-- Asanti specific -->
+			<!-- 20191003 5.0 -->
+			<!-- end 5.0 -->
+			<!-- *** 
+			One time setup 
+			-->
+			<!-- For Asanti Unit and DecimalSeparator is not mandatory as long as Page and Sheet size, Thickness is not used -->
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
