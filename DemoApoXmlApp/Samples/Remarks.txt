@@ -1,8 +1,2 @@
 ﻿Parsing fails if a comma is used as decimal separator.
 Always use a point as decimal separator in the ApoXML files.
-
-Asanti Posters warning:
-This notification is for Task Processor 'HotFolder', flow 'Generic Digital Press'
-The paper stock 'Generic' already exists with paper grade 'Empty'. 
-This paper grade is used and will not match with the requested one in the JDF: '0'.
-Specify a different JDF@Brand for each paper grade.

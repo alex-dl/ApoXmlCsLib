@@ -6,6 +6,11 @@
     <ApplicationIcon>ApoXML.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Samples\PDF\A4_16p_CMYK.pdf" />
     <None Remove="Samples\PDF\BusinessCard_A_01_DS_CMYK_85x54.7.pdf" />
