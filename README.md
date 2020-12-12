@@ -8,7 +8,7 @@ It allows web-to-print and MIS vendors to integrate with the Agfa workflows with
 ## Usage
 
 Copy the **ApoXmlCsLib.dll** file to your project and add a reference to this file.  
-To get this dll, download and build the project or simply download it from the release.
+To get this dll, download and build the project or simply download it from the release.  
 Depending on the workflow, Apogee or Asanti, use one of following constructors:
 
 ```cs
